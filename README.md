@@ -1,8 +1,10 @@
-# Redwood example ShadCn Generators
+# Redwood example Shadcn Generators
 
-These are some example files for using ShadCN in Redwood's scaffold generator.
+These are some example files for using Shadcn in Redwood's scaffold generator.
 
-You will need to install the following ShadCN components into Redwood:
+This assumes you have followed these instructions to install Shadcn into your Redwood project: https://github.com/redwoodjs/redwood/pull/10459
+
+You will need to install the following Shadcn components into Redwood:
 
 - Card
 - Table
@@ -10,7 +12,7 @@ You will need to install the following ShadCN components into Redwood:
 
 This example also uses a wrapper component around form inputs
 
-````
+```
 
 // Add this to your web/src/components/Forms/FieldWrapper.tsx
 
@@ -26,6 +28,3 @@ export default FieldWrapper
 Copy the generators folder into your 'web/' folder in redwood.
 
 And then you should be able to scaffold out a new page
-
-
-````
