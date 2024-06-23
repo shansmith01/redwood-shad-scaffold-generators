@@ -1,0 +1,53 @@
+import type { Find${pluralPascalName}, Find${pluralPascalName}Variables } from 'types/graphql'
+
+import { Link, routes } from '@redwoodjs/router'
+import type {
+  CellSuccessProps,
+  CellFailureProps,
+  TypedDocumentNode,
+} from '@redwoodjs/web'
+
+import ${pluralPascalName} from '${importComponentNames}'
+
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+
+export const QUERY: TypedDocumentNode<
+  Find${pluralPascalName},
+  Find${pluralPascalName}Variables
+> = gql`
+  query Find${pluralPascalName} {
+    ${pluralCamelName} {<% columns.forEach(column => { %>
+      <%= column.name %><% }) %>
+    }
+  }
+`
+
+export const Loading = () => <div>Loading...</div>
+
+export const Empty = () => {
+  return (
+    <Card className='text-center p-20'>
+      <CardHeader>
+        <CardTitle>{'No ${pluralCamelName} yet.'}</CardTitle>
+      </CardHeader>
+      <CardContent>
+      <Link to={routes.${newRouteName}()} className="text-primary">
+                <Button className="mt-4">{'Create one?'}</Button>
+                </Link>
+      </CardContent>
+    </Card>
+  )
+}
+
+export const Failure = ({ error }: CellFailureProps<Find${pluralPascalName}>) => (
+  <div className="rw-cell-error">{error?.message}</div>
+)
+
+export const Success = ({ ${pluralCamelName} }: CellSuccessProps<Find${pluralPascalName}, Find${pluralPascalName}Variables>) => {
+  return <Card>
+          <CardContent className='pt-8'>
+            <${pluralPascalName} ${pluralCamelName}={${pluralCamelName}} />
+          </CardContent>
+        </Card>
+}

@@ -1,0 +1,83 @@
+import type { Delete${singularPascalName}Mutation, Delete${singularPascalName}MutationVariables, Find${singularPascalName}By${pascalIdName} } from 'types/graphql'
+
+import { Link, routes, navigate } from '@redwoodjs/router'
+import { useMutation } from '@redwoodjs/web'
+import type { TypedDocumentNode } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/toast'
+import { Table, TableBody, TableCell, TableHead, TableRow } from '@/components/ui/table'
+import { ${formattersImports} } from 'src/lib/formatters'
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from 'src/components/ui/card'
+import { Button, buttonVariants } from 'src/components/ui/button'
+
+const DELETE_${singularConstantName}_MUTATION: TypedDocumentNode<Delete${singularPascalName}Mutation, Delete${singularPascalName}MutationVariables> = gql`
+  mutation Delete${singularPascalName}Mutation($${idName}: ${idType}!) {
+    delete${singularPascalName}(${idName}: $${idName}) {
+      ${idName}
+    }
+  }
+`
+
+interface Props {
+  ${singularCamelName}: NonNullable<Find${singularPascalName}By${pascalIdName}['${singularCamelName}']>
+}
+
+const ${singularPascalName} = ({ ${singularCamelName} }: Props) => {
+  const [delete${singularPascalName}] = useMutation(DELETE_${singularConstantName}_MUTATION, {
+    onCompleted: () => {
+      toast.success('${singularPascalName} deleted')
+      navigate(routes.${pluralRouteName}())
+    },
+    onError: (error) => {
+      toast.error(error.message)
+    },
+  })
+
+  const onDeleteClick = (${idName}: Delete${singularPascalName}MutationVariables['${idName}']) => {
+    if (confirm('Are you sure you want to delete ${singularCamelName} ' + ${idName} + '?')) {
+      delete${singularPascalName}({ variables: { ${idName} } })
+    }
+  }
+
+  return (
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            ${singularPascalName} {${singularCamelName}.${idName}} Detail
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableBody>
+              <% columns.forEach(column => { %><TableRow>
+                <TableHead><%= column.label %></TableHead><%
+                if (column.displayFunction) { %>
+                <TableCell>{${column.displayFunction}(${singularCamelName}.${column.name})}</TableCell><%
+                } else { %>
+                <TableCell>{${singularCamelName}.${column.name}}</TableCell><%
+                } %>
+              </TableRow><% }) %>
+            </TableBody>
+          </Table>
+        </CardContent>
+        <CardFooter>
+          <nav className='flex flex-row gap-2 p-4 justify-center'>
+            <Link
+              to={routes.${editRouteName}({ ${idName}: ${singularCamelName}.${idName} })}
+              className={buttonVariants({ variant: "secondary", size: "sm"})}
+            >
+            Edit
+            </Link>
+            <Button
+            variant='destructive'
+            size='sm'
+              onClick={() => onDeleteClick(${singularCamelName}.${idName})}
+            >
+            Delete
+            </Button>
+        </nav>
+        </CardFooter>
+    </Card>
+  )
+}
+
+export default ${singularPascalName}

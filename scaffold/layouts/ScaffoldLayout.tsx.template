@@ -1,0 +1,42 @@
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Link, routes } from '@redwoodjs/router'
+import { Toaster } from '@redwoodjs/web/toast'
+import { Plus } from 'lucide-react'
+
+type LayoutProps = {
+  title: string
+  titleTo: string
+  buttonLabel: string
+  buttonTo: string
+  children: React.ReactNode
+}
+
+const ScaffoldLayout = ({
+  title,
+  titleTo,
+  buttonLabel,
+  buttonTo,
+  children,
+}: LayoutProps) => {
+  return (
+    <>
+      <Toaster toastOptions={{ duration: 6000 }} />
+      <div className='flex flex-row justify-between items-center space-y-0'>
+
+          <Link to={routes[titleTo]()} >
+            <h1 className="text-lg font-semibold md:text-2xl>{title}</h1>
+          </Link>
+
+        <Link to={routes[buttonTo]()}>
+          <Button><Plus  className="mr-2 h-4 w-4"  /> {buttonLabel}</Button>
+        </Link>
+
+      <Card>
+        {children}
+      </Card>
+    </div>
+  )
+}
+
+export default ScaffoldLayout
