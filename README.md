@@ -27,4 +27,4 @@ export default FieldWrapper
 
 Copy the generators folder into your 'web/' folder in redwood.
 
-And then you should be able to scaffold out a new page
+And then you should be able to scaffold out a new model
